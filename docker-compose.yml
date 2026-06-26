@@ -3,3 +3,7 @@ services:
     build: ./vondbot
     env_file:
       - .env
+  api:
+    build: ./vonapi
+    ports:
+      - 8080:8080
