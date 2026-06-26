@@ -1,9 +1,9 @@
 services:
-  bot:
+  vondbot:
     build: ./vondbot
     env_file:
       - .env
-  api:
+  vonied:
+    build: ./vonied
+  vonapi:
     build: ./vonapi
-    ports:
-      - 8080:8080
