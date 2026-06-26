@@ -7,3 +7,7 @@ services:
     build: ./vonied
   vonapi:
     build: ./vonapi
+    ports:
+      - "8080:8080"
+    environment:
+      - GIN_MODE=release
