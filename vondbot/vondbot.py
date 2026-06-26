@@ -12,3 +12,4 @@ class Von(commands.Bot):
 
     async def setup_hook(self) -> None:
         await self.load_extension("cogs.utils")
+        await self.load_extension("cogs.fun")
