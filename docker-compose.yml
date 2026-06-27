@@ -1,9 +1,39 @@
 services:
-  bot:
+  vondbot:
     build: ./vondbot
     env_file:
       - .env
-  api:
+    networks:
+      - front-net
+  vonapi:
     build: ./vonapi
+    environment:
+      - GIN_MODE=release
+    networks:
+      - front-net
+      - back-net
+  vonied:
+    build: ./vonied
+    volumes:
+      - vonied:/app/dist
+    networks:
+      - front-net
+  nginx:
+    image: nginx:alpine-slim
     ports:
-      - 8080:8080
+      - 3000:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - vonied:/usr/share/nginx/html:ro
+    depends_on:
+      - vonied
+      - vonapi
+    networks:
+      - front-net
+
+networks:
+  front-net:
+  back-net:
+
+volumes:
+  vonied:

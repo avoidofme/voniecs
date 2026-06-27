@@ -15,7 +15,7 @@ func Start() {
 		v1.GET("/hw", handleHw)
 	}
 
-	if err := r.Run("localhost:8080"); err != nil {
+	if err := r.Run("0.0.0.0:80"); err != nil {
 		log.Fatal("fail to run vonapi")
 	}
 }
