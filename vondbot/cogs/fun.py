@@ -1,5 +1,5 @@
+import aiohttp
 from discord.ext import commands
-import requests
 import random
 
 
@@ -13,13 +13,15 @@ class Fun(commands.Cog):
         await ctx.send(f"i choose: {choice}")
 
     @commands.command(name="catfact")
-    async def catfact(sefl, ctx: commands.Context):
-        res = requests.get("https://catfact.ninja/fact")
-        data = res.json()
-        await ctx.send(f"""# cat fact:
-                        \r```
-                        \r{data["fact"]}
-                        \r```""")
+    async def catfact(self, ctx: commands.Context):
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://catfact.ninja/fact") as res:
+                if res.status == 200:
+                    data = await res.json()
+                    await ctx.send(f"""# cat fact:
+                                    \r```
+                                    \r{data["fact"]}
+                                    \r```""")
 
 
 async def setup(bot: commands.Bot):

@@ -1,6 +1,7 @@
 {
   "name": "vonied",
   "version": "0.0.0",
+  "packageManager": "pnpm@11.8.0",
   "private": true,
   "type": "module",
   "scripts": {
