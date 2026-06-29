@@ -14,6 +14,10 @@ class Utils(commands.Cog):
     async def say(self, ctx: commands.Context, *, msg: str) -> None:
         await ctx.send(msg)
 
+    @commands.command(name="avatar")
+    async def avatar(self, ctx: commands.Context) -> None:
+        await ctx.send("get avatar")
+
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Utils(bot))
