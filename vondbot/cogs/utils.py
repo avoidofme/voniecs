@@ -1,3 +1,4 @@
+# import discord
 from discord.ext import commands
 
 
@@ -16,7 +17,10 @@ class Utils(commands.Cog):
 
     @commands.command(name="avatar")
     async def avatar(self, ctx: commands.Context) -> None:
-        await ctx.send("get avatar")
+        avatar_url = ctx.author.display_avatar.with_size(1024).url
+        # embed = discord.Embed(title=f"{ctx.author.name}'s Avatar")
+        # embed.set_image(url=avatar_url)
+        await ctx.send(avatar_url)
 
 
 async def setup(bot: commands.Bot):
