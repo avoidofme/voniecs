@@ -1,23 +1,49 @@
 services:
   vondbot:
     build: ./vondbot
-    env_file:
-      - .env
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
     networks:
       - front-net
+
+  vondata:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - vondata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - back-net
+
   vonapi:
     build: ./vonapi
     environment:
       - GIN_MODE=release
+      - DB_HOST=vondata
+      - DB_PORT=5432
+    env_file:
+      - .env
+    depends_on:
+      vondata:
+        condition: service_healthy
     networks:
       - front-net
       - back-net
+
   vonied:
     build: ./vonied
     volumes:
       - vonied:/app/dist
     networks:
       - front-net
+
   nginx:
     image: nginx:alpine-slim
     ports:
@@ -36,4 +62,5 @@ networks:
   back-net:
 
 volumes:
+  vondata:
   vonied:
