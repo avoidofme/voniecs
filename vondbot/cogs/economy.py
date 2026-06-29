@@ -6,12 +6,14 @@ class Economy(commands.Cog):
         self.bot = bot
 
     @commands.command(name="balance")
-    async def balance(self, ctx: commands.Context):
+    async def balance(self, ctx: commands.Context) -> None:
+        """check your balance, but not yet"""
         await ctx.send("balance command")
 
     @commands.command(name="collect")
-    async def collect(self, ctx: commands.Context):
-        await ctx.send("balance command")
+    async def collect(self, ctx: commands.Context) -> None:
+        """collect your income, but not yet"""
+        await ctx.send("collect command")
 
 
 async def setup(bot: commands.Bot) -> None:
